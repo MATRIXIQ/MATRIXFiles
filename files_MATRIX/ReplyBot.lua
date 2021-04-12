@@ -1,252 +1,301 @@
---[[
-BY : MATRIXTEAM
-Channel Files : https://t.me/MATRIXFiles
-]]
-local function keko_MATRIX(data)
-local msg = data.message_
-redis = (loadfile "./libs/redis.lua")()
-database = Redis.connect('127.0.0.1', 6379)
-sudos = dofile('sudo.lua')
-https = require("ssl.https")
-bot_id_keko = {string.match(token, "^(%d+)(:)(.*)")}
-bot_id = tonumber(bot_id_keko[1])
-JSON = (loadfile  "./libs/dkjson.lua")()
-local function send(chat_id, reply_to_message_id, disable_notification, text, disable_web_page_preview, parse_mode)
-local TextParseMode = {ID = "TextParseModeMarkdown"}
-  tdcli_function ({
-  ID = "SendMessage",
-  chat_id_ = chat_id,
-  reply_to_message_id_ = reply_to_message_id,
-  disable_notification_ = disable_notification,
-  from_background_ = 1,
-  reply_markup_ = nil,
-  input_message_content_ = {
-  ID = "InputMessageText",
-  text_ = text,
-  disable_web_page_preview_ = disable_web_page_preview,
-  clear_draft_ = 0,
-  entities_ = {},
-  parse_mode_ = TextParseMode,
-  },
-  }, dl_cb, nil)
-  end
-  function is_owner(msg)
-user_id = msg.sender_user_id_
-chat_id = msg.chat_id_
-local var = false
-local admin = database:sismember('MATRIX:'..bot_id..'admins:', user_id)  
-local owner = database:sismember('MATRIX:'..bot_id..'owners:'..chat_id, user_id)
-local creator = database:sismember('MATRIX:'..bot_id..'creator:'..chat_id, user_id)  
-if owner then var = true
-end if admin then
-var = true end if creator then var = true end
-for k,v in pairs(sudo_users) do
-if user_id == v then
-var = true
-end end
-local keko_add_sudo = redis:get('MATRIX:'..bot_id..'sudoo'..user_id..'')
-if keko_add_sudo then var = true end
-return var
-end
-local msg = data.message_
-text = msg.content_.text_
-if not database:get('MATRIX:'..bot_id..'rep:mute'..msg.chat_id_) then
+local function Reply(msg)
+local text = msg.content_.text_
+if not database:get(bot_id..'MATRIX:Reply:Mute'..msg.chat_id_) then
 if text == 'هلو' then
-moody = "هلاوات 🌚👋🏻"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ههلو ، 🥳😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'شلونكم' then
-moody = "تمام وانت يكيوت ؟ 💕"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'شكو ماكو' then
-moody = "نسأل عنك يحلو  💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'بوت' then
-moody = "عمري تفضل ؟🙁"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'صباح الخير' then
-moody = "اطلق صباح 💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'صباح النور' then
-moody = "اطلق صباح 💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'صباح النور ' then
-moody = "اطلق صباح 💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'سلام عليكم'then
-moody = 'عليكم السلام'
-send (msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'فديت'then
-moody = 'فداك 💘' 
-send (msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'ها' then
-moody = "ها يروحي"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-
-if text == 'احبك' then
-moody = "عيب🌚💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = '• تَمـآمہ وانتا يكمر 🥳💗،'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'شلونك' then
-moody = "اكيد راح يكلك تمام🌚"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
-end
-if text == 'شلونج' then
-moody = "اكيد حتكلك مو تمام🌚"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'تَمـآمہ وانتا 🥺💗،؟'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'تمام' then
-moody = "العار ما يصيرله شي🤣"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'دﯡٰم حيـﺎُتم ☹️💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'هلاو' then
-moody = "اطلق هلاو💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ﮪـلاواتــہ 🥳💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '😐' then
-moody = "اربط فيشه🌚👋🏻"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'شبَيڪہ صافن ☹️💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'هاي' then
-moody = "اطلق هاي💕"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ههايات ؏ـمريہٰ ☹️💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
-if text == 'وينكم' then
-moody = "شعليك بيهم🙁"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+if text == 'بوت' then
+TextReply = 'وياك حامي ݪڪࢪوب 🥳😹💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'اريد اكبل' then
-moody = "سوالف الكوكو عوفها"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'شـﯡٰفلڪ حاتهہ منـہ. المشرفات 🙊😹💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'لتزحف' then
-moody = "ولا يكعد الثكيل 😹"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'دعوفه يفࢪغ الجفاف 🥺💔😹'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'كلخرا' then
-moody = "دعبل"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'هايليش ☹️💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'زاحف' then
-moody = "عاشت الاسامي😹"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'هسهہ انيـہ زاحف انتا شنو 🙂😹💗بوم ،'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'دي' then
-moody = "ديصيحوك"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'امشي بـــ♕ـيكــہ 😒😹💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'فرخ' then
-moody = "منو صاح اسمك"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'اطلعبرا مـنـࢪيـد فروخ بالڪࢪوب 🙁😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'تعالي خاص' then
-moody = "اجي وياكم 🌝"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ﺎُݪى متى تضل طامس ياهيه التجي تڪݪها خاص 🙂😹💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'اكرهك' then
-moody = "عليك الله حبني😿"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'لا ﺎﻟلهۂَ عليك حبني 💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
-if text == 'نرتبط' then
-moody = "مرتبط وية نفسي🌚👋🏻"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+if text == 'احبك' then
+TextReply = 'نࢪتبط لعد 🥺😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'باي' then
-moody = "باي حبيبي"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'جذاب ࢪاح يطمس 😭😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'واكف' then
-moody = "استريح"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'شعندڪ واكف متكعد ﺎُحنه مو بصف 😕😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'وين المدير' then
-moody = "بحظني"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'طامس ويه مشࢪفه شتريد 😕😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'انجب' then
-moody = "دعبل"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'لـﺣﺣظۿﮧ خل ابجي 👍💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'تحبني' then
-moody = "ما ادور حدث☺️"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'مـﺎُدࢪي خل اسأل حَحبيبتيہ تقبل ☹️😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '🌚' then
-moody = "منورة صورتك"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'شبَيڪہ فڪࢪ دومك مصخم 😒😹💞 '
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '🙄' then
-moody = "باوع كدامك"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'نࢪ࣪ݪ عينك لتنحول ☺️😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '😒' then
-moody = "شكلك من تكعد من النوم"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'شبَيڪہ ☹️💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '😳' then
-moody = "شبيك😕"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'مصدوم منـہ. شفتلك حاتهہ 😕😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == '🙁' then
+TextReply = 'شبَيڪہ ضايج 👍💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '🚶💔' then
-moody = "حركات مال نفسيه بطلوهن😒"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'تـ؏ نتمشى سوه 💘🚶🏻‍♂️'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '🙂' then
-moody = "ها كانسر"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ههـݪـﯡٰ ☹️💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '🌝' then
-moody = "صورتي من جنت صغير"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'يا ڪمࢪ ☹️💗'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'صباحو' then
-moody = "اطلق صباح💘"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'صبـﺎُحح ﺎُݪعسل 🥳💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'صباح الخير' then
+TextReply = 'صبـﺎُحح ﺎُݪعسل 🥳💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'كفو' then
-moody = "منك حبيبي👋🏻"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ڪفو منـہ. شاربك 🥳😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == '😌' then
-moody = "وجه زربة"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ده واثق منـہ. حالو 😕😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 if text == 'اها' then
-moody = "وداعتها للحجيه"
-send(msg.chat_id_, msg.id_, 1, moody, 1, 'md')
+TextReply = 'ايـي حتاتي ☹️😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'شسمج' then
+TextReply = 'اسمها سعديه 🥳😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'شسمك' then
+TextReply = 'اسمهہ جبار 😭😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'شوف' then
+TextReply = 'يلاا مو نحولت 😒😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'مساء الخير' then
+TextReply = 'م ـساء ﺎُݪوࢪد 🥳💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'المدرسه' then
+TextReply = 'خࢪب ام ﺎُݪمدرسه 🙂👍💔💔💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'منو ديحذف رسائلي' then
+TextReply = 'شوف ﺎُݪاحداث ☹️😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'البوت واكف' then
+TextReply = 'ايوالله تعبت 💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'غلس' then
+TextReply = 'اهمسݪيہ 🥺😹💞،'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'حارة' then
+TextReply = 'ايـي وﺎﻟلهۂَ ݪمنشئ ميشغل مبرده 👍💔'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'هههه' then
+TextReply = 'ڪياَتۿ الضحكه 😫😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'ههههه' then
+TextReply = 'ڪياَتۿ الضحكه 😫😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == '😹' then
+TextReply = 'ڪياَتۿ الضحكه 😫😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'وين' then
+TextReply = 'ﺎُࢪﯡٰح اطمس ☺️😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'كافي لغوة' then
+TextReply = 'سد حلكهم واحد واحد 🙂😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'نايمين' then
+TextReply = 'شتࢪيد منهم خليهم نايمين 🙂😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'اكو احد' then
+TextReply = 'طﺎُمسين تـ؏ فدشوي 🙂😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'فديت' then
+TextReply = 'احح فديتني 😫😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'شكو' then
+TextReply = 'صارت دمايه بين المشرفين 😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'اوف' then
+TextReply = '؏َـيب وليدي 🙁😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'احبج' then
+TextReply = 'جذاب زاحف ؏ـلى نص الڪـࢪۅبہ 🙂😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
+end
+if text == 'انتة منو' then
+TextReply = 'انيـہ حاميكم 😒😹💞'
+send(msg.chat_id_, msg.id_,'['..TextReply..']')
+return false
 end
 end
-if  (text and text == 'تفعيل الردود') and is_owner(msg) then
-    if not database:get('MATRIX:'..bot_id..'rep:mute'..msg.chat_id_) then
-  send(msg.chat_id_, msg.id_, 1, 'ردود البوت مفعله سابقا', 1, 'md')
-    else
-  send(msg.chat_id_, msg.id_, 1, 'تم تفعيل الردود', 1, 'md')
-   database:del('MATRIX:'..bot_id..'rep:mute'..msg.chat_id_)
-  end
-  end
-  if(text and text == 'تعطيل الردود') and is_owner(msg) then
-    if database:get('MATRIX:'..bot_id..'rep:mute'..msg.chat_id_) then
-  send(msg.chat_id_, msg.id_, 1, 'ردود البوت معطله سابقا', 1, 'md')
-  else
-  send(msg.chat_id_, msg.id_, 1, 'تم تعطيل الردود', 1, 'md')
-    database:set('MATRIX:'..bot_id..'rep:mute'..msg.chat_id_,true)
-  end
-    end
+
+if text == 'تفعيل ردود البوت' and Owner(msg) then
+database:del(bot_id..'MATRIX:Reply:Mute'..msg.chat_id_)
+send(msg.chat_id_, msg.id_,'≁⎠ تم تفعيل ردود البوت')
+return false
+end
+
+if text == 'تعطيل ردود البوت' and Owner(msg) then
+database:set(bot_id..'MATRIX:Reply:Mute'..msg.chat_id_,true)
+send(msg.chat_id_, msg.id_,'≁⎠ تم تعطيل ردود البوت')
+return false
+end
 
 end
 return {
-	keko_MATRIX = keko_MATRIX,
+MATRIX = Reply
 }
---[[
-BY : MATRIXTEAM
-Channel Files : https://t.me/Matrix_file
-]]
